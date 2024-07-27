@@ -43,11 +43,14 @@ export default function RootLayout({
 }>) {
     return (
         <html lang="en" suppressHydrationWarning>
+        <head>
+            <script src="http://localhost:8097"></script>
+        </head>
         <body className={inter.className + " max-w-screen-lg m-auto min-h-screen flex flex-col"}>
         <ThemeProvider>
-        <Header/>
+            <Header/>
             {children}
-        <Footer/>
+            <Footer/>
         </ThemeProvider>
         </body>
         </html>
