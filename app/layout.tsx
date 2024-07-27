@@ -1,16 +1,16 @@
-import { Inter } from "next/font/google";
+import {Inter} from "next/font/google";
 import "./globals.css";
 import Image from "next/image";
 import ThemeToggle from "@/app/theme-toggle";
 import {ThemeProvider} from "next-themes";
 
-const inter = Inter({ subsets: ["latin"] });
+const inter = Inter({subsets: ["latin"]});
 
 function Header() {
-  return <header className="w-full flex justify-between py-4">
-    <h1><strong>PROMPT</strong>dle</h1>
-    <ThemeToggle/>
-  </header>;
+    return <header className="w-full flex justify-between py-4">
+        <h1><strong>PROMPT</strong>dle</h1>
+        <ThemeToggle/>
+    </header>;
 }
 
 function Footer() {
