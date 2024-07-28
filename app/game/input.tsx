@@ -9,17 +9,21 @@ export default function GameInput(props: any /* TODO type */) {
     const inputRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
 
     const [guess, setGuess] = useState('');
+    const [bounce, setBounce] = useState(false);
 
     const submit = () => {
         const candidate = guess.trim();
+        inputRef.current?.focus();
+
         if (isEmptyOrSpaces(candidate)) {
+            setBounce(true);
+            setTimeout(() => setBounce(false), 200)
             console.log("EMPTY GUESS"); // TODO animation + message
             return;
         }
 
         props.submit(candidate);
         setGuess("");
-        inputRef.current?.focus();
     };
 
     const onKeyDown = (e: KEvent) => {
@@ -42,6 +46,9 @@ export default function GameInput(props: any /* TODO type */) {
                 onKeyDown={onKeyDown}
                 isClearable
                 isDisabled={props.disabled}
+                type="text"
+                placeholder="Enter your guess"
+                onAnimationEnd={() => setBounce(false)}
                 classNames={{
                     label: "text-black/50 dark:text-white/90",
                     input: [
@@ -70,12 +77,16 @@ export default function GameInput(props: any /* TODO type */) {
                         // "group-data-[focus=true]:bg-default-200/50",
                         // "dark:group-data-[focus=true]:bg-default/60",
                         "!cursor-text",
+                        bounce ? "animate-wiggle" : "",
+                        // bounce ? "transition-transform translate-y-10 duration-250" : "",
                     ]
                 }}
-                type="text" placeholder="Enter your guess"/>
+            />
             <Button
                 className="aspect-[3] h-full rounded-r bg-gradient-to-tr from-pink-500 to-yellow-500 text-white"
                 onPress={() => submit()}
+                disableRipple={true}
+                variant="flat"
             >
                 Guess
             </Button>

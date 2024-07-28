@@ -15,7 +15,7 @@ export default function GameGuess(props: GameGuessProps) {
             value={value}
             showValueLabel={false}
             classNames={{
-                base: "w-full",
+                base: "w-full animate-fade-right",
                 track: "h-2 overflow-clip rounded-sm",
                 indicator: ["bg-gradient-to-r from-pink-500 to-yellow-500 rounded-sm",
                     "transition ease-in-out duration-1000"],
