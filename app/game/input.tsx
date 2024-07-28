@@ -31,7 +31,7 @@ export default function GameInput(props: any /* TODO type */) {
         //    - length in words
         //    - %age of semantic similarity
 
-        <div className="flex w-full h-8 mt-auto">
+        <div className="flex w-full h-8">
             <Input
                 value={guess}
                 onValueChange={setGuess}
@@ -55,7 +55,7 @@ export default function GameInput(props: any /* TODO type */) {
                     ],
                     inputWrapper: [
                         "h-full",
-                        "rounded-l-lg",
+                        "rounded-l",
                         "bg-black/15 dark:bg-white/15",
                         // "bg-default-200/50",
                         // "dark:bg-default/60",
@@ -70,7 +70,7 @@ export default function GameInput(props: any /* TODO type */) {
                 }}
                 type="text" placeholder="Enter your guess"/>
             <Button
-                className="aspect-[3] h-full rounded-r-lg bg-gradient-to-tr from-pink-500 to-yellow-500 text-white"
+                className="aspect-[3] h-full rounded-r bg-gradient-to-tr from-pink-500 to-yellow-500 text-white"
                 onPress={() => submit()}
             >
                 Guess

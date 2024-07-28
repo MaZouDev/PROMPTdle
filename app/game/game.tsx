@@ -10,27 +10,42 @@ import {Button} from "@nextui-org/react";
 
 const guessStorageKey = "guesses";
 const answer = "cat looking at a fish tank";
+const MAX_GUESSES = 5;
+let initGuesses = true;
 
 export default function Game() {
-    const [guesses, setGuesses] = useState<string[]>([]);
+    const [guesses, setGuesses] = useState<Guess[]>([]);
+    const [score, setScore] = useState(0);
     const [gameOver, setGameOver] = useState<boolean>(false);
-    const checkGameOver = useCallback(() => {
-        if (guesses.length >= 5) setGameOver(true);
-    }, [guesses.length]);
 
     useEffect(() => {
-        setGuesses(JSON.parse(localStorage.getItem(guessStorageKey) || "[]") || []);
-        checkGameOver();
-    }, [checkGameOver]);
+        if (!initGuesses) return;
+        initGuesses = false;
 
+        console.log("readLocalStorage", JSON.stringify(guesses));
+        const guessesLabels: string[] = JSON.parse(localStorage.getItem(guessStorageKey) || "[]") || [];
+        setGuesses(guessesLabels.map(label => new Guess(label, answer)));
+        console.log(JSON.stringify(guessesLabels));
+        console.log(JSON.stringify(guesses));
+    }, [guesses]);
 
-    const addGuess = (guess: string) => {
-        const newGuesses = nPush(guesses, guess);
+     useEffect(() => {
+        console.log("checkGameOver", JSON.stringify(guesses));
+        if (guesses.length >= MAX_GUESSES) setGameOver(true);
+        setScore(Math.max(...guesses.map(guess => guess.similarity)));
+    }, [guesses]);
+
+    useEffect(() => {
+        console.log("write local storage", JSON.stringify(guesses));
+        localStorage.setItem(guessStorageKey, JSON.stringify(guesses.map(guess => guess.label)));
+    }, [guesses]);
+
+    const addGuess = useCallback((guess: string) => {
+        console.log("addGuess", JSON.stringify(guesses));
+        const newGuesses = nPush(guesses, new Guess(guess, answer));
         setGuesses(newGuesses);
-        localStorage.setItem(guessStorageKey, JSON.stringify(newGuesses));
-
-        checkGameOver();
-    };
+        localStorage.setItem(guessStorageKey, JSON.stringify(newGuesses.map(guess => guess.label)));
+    }, [guesses]);
 
     const resetLocalStorage = () => {
         setGuesses([]);
@@ -50,9 +65,16 @@ export default function Game() {
 
             <div className="w-1/2 flex flex-col gap-4 items-center flex-1">
                 {guesses.map((guess, index) =>
-                    <GameGuess key={index} guess={new Guess(guess, answer)}/>)}
+                    <GameGuess key={index} guess={guess}/>)}
 
-                <GameInput submit={addGuess} disabled={gameOver}/>
+                <div>
+                    {gameOver && <div className="flex flex-row justify-between">
+                        <p>Your Score:</p>
+                        <p>{score}%</p>
+                    </div>}
+                    <GameInput submit={addGuess} disabled={gameOver}/>
+                </div>
+                {/* TODO test only*/}
                 <Button onClick={resetLocalStorage}>Reset LS</Button>
             </div>
         </main>
