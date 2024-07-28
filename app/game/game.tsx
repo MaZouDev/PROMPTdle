@@ -43,6 +43,7 @@ export default function Game() {
     }, [score]);
 
     useEffect(() => {
+        // write guesses to local storage
         localStorage.setItem(guessStorageKey, JSON.stringify(guesses.map(guess => guess.label)));
     }, [guesses]);
 
@@ -54,7 +55,7 @@ export default function Game() {
 
     const resetLocalStorage = () => {
         setGuesses([]);
-        localStorage.setItem(guessStorageKey, JSON.stringify([]));
+        localStorage.removeItem(guessStorageKey);
         setGameOver(false);
     };
 
@@ -90,7 +91,7 @@ export default function Game() {
                         />
                         : <GameInput submit={addGuess} disabled={gameOver}/>}
                 </div>
-                {/* TODO test only*/}
+                {/* TODO test only */}
                 <Button onClick={resetLocalStorage}>Reset LS</Button>
             </div>
         </main>

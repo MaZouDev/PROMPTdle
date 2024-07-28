@@ -1,11 +1,13 @@
 import {Button, Input} from "@nextui-org/react";
-import React, {useState} from "react";
+import React, {createRef, useRef, useState} from "react";
 import {isEmptyOrSpaces} from "@/utils/string";
 import {Keys} from "@/utils/keyboard";
 
 type KEvent = React.KeyboardEvent<HTMLInputElement>;
 
 export default function GameInput(props: any /* TODO type */) {
+    const inputRef: React.MutableRefObject<HTMLInputElement | null> = useRef(null);
+
     const [guess, setGuess] = useState('');
 
     const submit = () => {
@@ -17,6 +19,7 @@ export default function GameInput(props: any /* TODO type */) {
 
         props.submit(candidate);
         setGuess("");
+        inputRef.current?.focus();
     };
 
     const onKeyDown = (e: KEvent) => {
@@ -33,6 +36,7 @@ export default function GameInput(props: any /* TODO type */) {
 
         <div className="flex w-full h-8">
             <Input
+                ref={inputRef}
                 value={guess}
                 onValueChange={setGuess}
                 onKeyDown={onKeyDown}
