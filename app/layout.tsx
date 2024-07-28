@@ -16,7 +16,7 @@ function Header() {
 function Footer() {
     return (
         <footer className="mt-auto flex justify-between p-4">
-            <h1>Made by MaZoo. Hosted by.</h1>
+            <h1>MaZoo</h1>
             <div>
                 <Image
                     className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
@@ -24,12 +24,11 @@ function Footer() {
                     alt="Next.js Logo"
                     width={0}
                     height={0}
-                    style={{ width: 'auto', height: '2vh' }}
+                    style={{width: 'auto', height: '2vh'}}
                     priority
                 />
-                <div className="fixed z-[-1]
-            after:absolute after:-z-20 after:h-[120px] after:w-full after:-translate-y-1/2 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-['']
-            after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
+                <div
+                    className="fixed z-[-1] after:absolute after:-z-20 after:h-[120px] after:w-full after:-translate-y-1/2 after:bg-gradient-conic after:from-sky-200 after:via-blue-200 after:blur-2xl after:content-[''] after:dark:from-sky-900 after:dark:via-[#0141ff] after:dark:opacity-40 sm:before:w-[480px] sm:after:w-[240px] before:lg:h-[360px]">
                 </div>
             </div>
         </footer>
@@ -50,11 +49,11 @@ export default function RootLayout({
         </head>
         <body className={inter.className + " flex justify-center"}>
         <div className={"max-w-screen-lg m-auto min-h-screen flex-1 flex flex-col"}>
-        <ThemeProvider>
-            <Header/>
-            {children}
-            <Footer/>
-        </ThemeProvider>
+            <ThemeProvider>
+                <Header/>
+                {children}
+                <Footer/>
+            </ThemeProvider>
         </div>
         </body>
         </html>

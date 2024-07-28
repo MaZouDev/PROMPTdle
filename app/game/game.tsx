@@ -1,9 +1,18 @@
-import React from "react";
+"use client"
+
+import React, {useState} from "react";
 import Image from "next/image";
 import GameInput from "@/app/game/input";
 import GameGuess from "@/app/game/guess";
+import {nPush} from "@/utils/array";
 
 export default function Game() {
+    const [guesses, setGuesses] = useState<string[]>([]);
+
+    const addGuess = (guess: string) => {
+        setGuesses(current => nPush(current, guess))
+    };
+
     return (
         <main className="flex flex-col gap-4 items-center p-24 flex-1">
             <Image
@@ -13,9 +22,10 @@ export default function Game() {
                 sizes="100vw"
                 style={{width: '33vh', height: 'auto'}}
                 alt="Uploaded Image"/>
-            <GameGuess guess='toto'/>
-            <GameGuess guess="Tata à l'aubergine écrit un livre"/>
-            <GameInput/>
+
+            {guesses.map((guess, index) => <GameGuess key={index} guess={guess}/>)}
+
+            <GameInput submit={addGuess}/>
         </main>
     );
 }
