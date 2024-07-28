@@ -19,29 +19,34 @@ export default function Game() {
     const [gameOver, setGameOver] = useState<boolean>(false);
 
     useEffect(() => {
+        // init guesses from local storage
         if (!initGuesses) return;
         initGuesses = false;
 
-        console.log("readLocalStorage", JSON.stringify(guesses));
         const guessesLabels: string[] = JSON.parse(localStorage.getItem(guessStorageKey) || "[]") || [];
         setGuesses(guessesLabels.map(label => new Guess(label, answer)));
-        console.log(JSON.stringify(guessesLabels));
-        console.log(JSON.stringify(guesses));
     }, [guesses]);
 
     useEffect(() => {
-        console.log("checkGameOver", JSON.stringify(guesses));
-        if (guesses.length >= MAX_GUESSES) setGameOver(true);
+        // update the score
         setScore(Math.max(...guesses.map(guess => guess.similarity)));
     }, [guesses]);
 
     useEffect(() => {
-        console.log("write local storage", JSON.stringify(guesses));
+        // stop the game after 5 tries
+        if (guesses.length >= MAX_GUESSES) setGameOver(true);
+    }, [guesses]);
+
+    useEffect(() => {
+        // stop the game if the answer was found
+        if (score === 1) setGameOver(true);
+    }, [score]);
+
+    useEffect(() => {
         localStorage.setItem(guessStorageKey, JSON.stringify(guesses.map(guess => guess.label)));
     }, [guesses]);
 
     const addGuess = useCallback((guess: string) => {
-        console.log("addGuess", JSON.stringify(guesses));
         const newGuesses = nPush(guesses, new Guess(guess, answer));
         setGuesses(newGuesses);
         localStorage.setItem(guessStorageKey, JSON.stringify(newGuesses.map(guess => guess.label)));
