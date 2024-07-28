@@ -1,18 +1,27 @@
 import {Button, Input} from "@nextui-org/react";
 import React, {useState} from "react";
 import {isEmptyOrSpaces} from "@/utils/string";
+import {Keys} from "@/utils/keyboard";
+
+type KEvent = React.KeyboardEvent<HTMLInputElement>;
 
 export default function GameInput(props: any /* TODO type */) {
     const [guess, setGuess] = useState('');
 
-    const submit = (candidate: string) => {
+    const submit = () => {
+        const candidate = guess.trim();
         if (isEmptyOrSpaces(candidate)) {
             console.log("EMPTY GUESS"); // TODO animation + message
             return;
         }
 
-        props.submit(guess);
+        props.submit(candidate);
+        setGuess("");
     };
+
+    const onKeyDown = (e: KEvent) => {
+        if (e.key === Keys.Enter) submit();
+    }
 
     return (
         // ideas for hints:
@@ -26,6 +35,7 @@ export default function GameInput(props: any /* TODO type */) {
             <Input
                 value={guess}
                 onValueChange={setGuess}
+                onKeyDown={onKeyDown}
                 isClearable
                 classNames={{
                     label: "text-black/50 dark:text-white/90",
@@ -58,10 +68,10 @@ export default function GameInput(props: any /* TODO type */) {
                         "!cursor-text",
                     ]
                 }}
-                type="email" placeholder="Enter your guess"/>
+                type="text" placeholder="Enter your guess"/>
             <Button
                 className="aspect-[3] h-full rounded-r-lg bg-gradient-to-tr from-pink-500 to-yellow-500 text-white shadow-lg"
-                onPress={() => submit(guess)}
+                onPress={() => submit()}
             >
                 Guess
             </Button>
