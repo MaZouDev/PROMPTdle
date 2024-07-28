@@ -1,16 +1,23 @@
 "use client"
 
-import React, {useState} from "react";
+import React, {useEffect, useState} from "react";
 import Image from "next/image";
 import GameInput from "@/app/game/input";
 import GameGuess from "@/app/game/guess";
 import {nPush} from "@/utils/array";
 
+const guessStorageKey = "guesses";
+
 export default function Game() {
     const [guesses, setGuesses] = useState<string[]>([]);
+    useEffect(() => {
+        setGuesses(JSON.parse(localStorage.getItem(guessStorageKey) || "[]") || []);
+    }, []);
 
     const addGuess = (guess: string) => {
-        setGuesses(current => nPush(current, guess))
+        const newGuesses = nPush(guesses, guess);
+        setGuesses(newGuesses)
+        localStorage.setItem(guessStorageKey, JSON.stringify(newGuesses));
     };
 
     return (
