@@ -7,5 +7,5 @@ export class Guess {
         this.similarity = similarity(label, answer);
     }
 
-    public percentage = () => Math.round(this.similarity * 10000) / 100;
+    public percentage = () => this.similarity * 99 + 1;
 }

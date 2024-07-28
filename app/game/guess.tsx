@@ -6,8 +6,6 @@ interface GameGuessProps {
 }
 
 export default function GameGuess(props: GameGuessProps) {
-    // Quick hack to make 0% values appear
-    // TODO something better? Change progress scale to 0-100 instead of 1-100?
     let value = props.guess.percentage();
     if (value === 0) value = 1;
 
