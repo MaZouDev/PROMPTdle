@@ -1,4 +1,4 @@
-import Game from "@/app/game";
+import Game from "@/app/game/main";
 
 export default function Home() {
     return (

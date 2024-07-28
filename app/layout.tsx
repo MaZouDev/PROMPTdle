@@ -44,14 +44,18 @@ export default function RootLayout({
     return (
         <html lang="en" suppressHydrationWarning>
         <head>
-            <script src="http://localhost:8097"></script>
+            {/* react-devtools connector */}
+            {/*<script src="http://localhost:8097"></script>*/}
+            <title>PROMPTdle</title>
         </head>
-        <body className={inter.className + " max-w-screen-lg m-auto min-h-screen flex flex-col"}>
+        <body className={inter.className + " flex justify-center"}>
+        <div className={"max-w-screen-lg m-auto min-h-screen flex-1 flex flex-col"}>
         <ThemeProvider>
             <Header/>
             {children}
             <Footer/>
         </ThemeProvider>
+        </div>
         </body>
         </html>
     );
