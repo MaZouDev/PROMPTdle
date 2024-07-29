@@ -1,5 +1,5 @@
 import {Button, Input} from "@nextui-org/react";
-import React, {createRef, useRef, useState} from "react";
+import React, {useRef, useState} from "react";
 import {isEmptyOrSpaces} from "@/utils/string";
 import {Keys} from "@/utils/keyboard";
 

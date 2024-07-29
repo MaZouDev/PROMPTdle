@@ -9,3 +9,4 @@ export class Guess {
 
     public percentage = () => this.similarity * 99 + 1;
 }
+

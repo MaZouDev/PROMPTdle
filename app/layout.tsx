@@ -16,7 +16,7 @@ function Header() {
 function Footer() {
     return (
         <footer className="mt-auto flex justify-between p-4">
-            <h1>MaZoo</h1>
+            <h1>MaZou</h1>
             <div>
                 <Image
                     className="relative dark:drop-shadow-[0_0_0.3rem_#ffffff70] dark:invert"
